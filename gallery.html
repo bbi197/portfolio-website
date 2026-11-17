@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">\
+    <title>Ruth Kamau - Full Gallery</title>
+    <meta name="description" content="Explore the full gallery of videos and photos from Ruth Kamau, Mediator & Mental Health Professional.">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Font: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa; /* Light mode default */
+            color: #333; /* Light mode default */
+            scroll-behavior: smooth;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #1a202c; /* Dark background */
+            color: #e2e8f0; /* Light text */
+        }
+
+        /* Adjust elements for dark mode */
+        body.dark-mode .card {
+            background-color: #2d3748; /* Darker card background */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.15);
+        }
+
+        body.dark-mode .text-gray-800 {
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .text-gray-700 {
+            color: #cbd5e0;
+        }
+
+        body.dark-mode .text-blue-700 {
+            color: #90cdf4; /* Lighter blue for dark mode headings */
+        }
+
+        body.dark-mode .text-blue-600 {
+            color: #63b3ed; /* Lighter blue for dark mode links/headings */
+        }
+
+        body.dark-mode header {
+            background-color: #2d3748; /* Darker header */
+        }
+
+        body.dark-mode footer {
+            background-color: #1a202c; /* Darker footer */
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+            transition: transform 0.3s ease-in-out, background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 0.75rem; /* rounded-lg */
+        }
+        .video-container iframe,
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        .photo-img {
+            width: 100%;
+            height: 200px; /* Fixed height for consistency */
+            object-fit: cover; /* Cover the area, cropping if necessary */
+            border-radius: 0.75rem; /* rounded-lg */
+        }
+
+        /* Dark Mode Toggle Button */
+        #dark-mode-toggle {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background-color: #fff;
+            color: #333;
+            border: none;
+            border-radius: 9999px; /* Full rounded */
+            padding: 0.75rem;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #dark-mode-toggle:hover {
+            background-color: #f0f0f0;
+            transform: scale(1.05);
+        }
+
+        body.dark-mode #dark-mode-toggle {
+            background-color: #4a5568;
+            color: #e2e8f0;
+        }
+
+        body.dark-mode #dark-mode-toggle:hover {
+            background-color: #636b7f;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Dark Mode Toggle Button -->
+    <button id="dark-mode-toggle" aria-label="Toggle dark mode">
+        <i class="fas fa-moon text-xl"></i>
+    </button>
+
+    <header class="bg-blue-600 text-white py-6 shadow-md">
+        <div class="container mx-auto px-4 sm:px-6 flex justify-between items-center">
+            <a href="index.html" class="text-xl font-bold hover:text-blue-200 transition duration-300">
+                <i class="fas fa-arrow-left mr-2"></i> Back to Home
+            </a>
+            <h1 class="text-2xl font-bold">Full Gallery</h1>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 sm:p-6 lg:p-8">
+        <section id="videos-gallery" class="mb-12">
+            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-8 text-blue-700">Videos</h2>
+            <div id="videos-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Videos will be populated by JavaScript or static content -->
+                <div class="card">
+                    <h3 class="text-xl font-semibold mb-3 text-blue-700">The Importance of Mediation</h3>
+                    <div class="video-container">
+                        <video controls class="w-full h-full">
+                            <source src="videos/teach2.11.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3 class="text-xl font-semibold mb-3 text-blue-700">Understanding Mediation</h3>
+                    <div class="video-container">
+                        <video controls class="w-full h-full">
+                            <source src="videos/teach.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3 class="text-xl font-semibold mb-3 text-blue-700">Social Activities</h3>
+                    <div class="video-container">
+                        <video controls class="w-full h-full">
+                            <source src="videos/teach1.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3 class="text-xl font-semibold mb-3 text-blue-700">Coping with Stress</h3>
+                    <div class="video-container">
+                        <video controls class="w-full h-full">
+                            <source src="videos/teach2 (1).mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3 class="text-xl font-semibold mb-3 text-blue-700">Responsibility Training</h3>
+                    <div class="video-container">
+                        <video controls class="w-full h-full">
+                            <source src="videos/teach3.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3 class="text-xl font-semibold mb-3 text-blue-700">Supporting boy child</h3>
+                    <div class="video-container">
+                        <video controls class="w-full h-full">
+                            <source src="videos/Video.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+               <div class="card">
+                    <h3 class="text-xl font-semibold mb-3 text-blue-700">Tips for Mental Health</h3>
+                    <div class="video-container">
+                        <video controls class="w-full h-full">
+                            <source src="videos/Engage.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3 class="text-xl font-semibold mb-3 text-blue-700">Mindfulness and Well-being</h3>
+                    <div class="video-container">
+                        <video controls class="w-full h-full">
+                            <source src="videos/Engage2.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+                 <div class="card">
+                    <h3 class="text-xl font-semibold mb-3 text-blue-700">Life Skills</h3>
+                    <div class="video-container">
+                        <video controls class="w-full h-full">
+                            <source src="videos/ls.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+                  <div class="card">
+                    <h3 class="text-xl font-semibold mb-3 text-blue-700">Teenage activities</h3>
+                    <div class="video-container">
+                        <video controls class="w-full h-full">
+                            <source src="videos/teenact.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+                                <div class="card">
+                    <h3 class="text-xl font-semibold mb-3 text-blue-700">life skills</h3>
+                    <div class="video-container">
+                        <video controls class="w-full h-full">
+                            <source src="videos/Video.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3 class="text-xl font-semibold mb-3 text-blue-700">Life skills</h3>
+                    <div class="video-container">
+                        <video controls class="w-full h-full">
+                            <source src="videos/teach5.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+                                <div class="card">
+                    <h3 class="text-xl font-semibold mb-3 text-blue-700">life skills</h3>
+                    <div class="video-container">
+                        <video controls class="w-full h-full">
+                            <source src="videos/teach6.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>        
+                        <div class="card">
+                    <h3 class="text-xl font-semibold mb-3 text-blue-700">life skills</h3>
+                    <div class="video-container">
+                        <video controls class="w-full h-full">
+                            <source src="videos/teach7.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+                                <div class="card">
+                    <h3 class="text-xl font-semibold mb-3 text-blue-700">life skills</h3>
+                    <div class="video-container">
+                        <video controls class="w-full h-full">
+                            <source src="videos/teach8.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+                                <div class="card">
+                    <h3 class="text-xl font-semibold mb-3 text-blue-700">life skills</h3>
+                    <div class="video-container">
+                        <video controls class="w-full h-full">
+                            <source src="videos/teach9.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+                                <div class="card">
+                    <h3 class="text-xl font-semibold mb-3 text-blue-700">life skills</h3>
+                    <div class="video-container">
+                        <video controls class="w-full h-full">
+                            <source src="videos/teach10.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+                                <div class="card">
+                    <h3 class="text-xl font-semibold mb-3 text-blue-700">Life skills</h3>
+                    <div class="video-container">
+                        <video controls class="w-full h-full">
+                            <source src="videos/teach11.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+                                <div class="card">
+                    <h3 class="text-xl font-semibold mb-3 text-blue-700">life skills</h3>
+                    <div class="video-container">
+                        <video controls class="w-full h-full">
+                            <source src="videos/teach12.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3 class="text-xl font-semibold mb-3 text-blue-700">Effective Communication Skills</h3>
+                    <div class="video-container">
+                        <video controls class="w-full h-full">
+                            <source src="videos/vidoe.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+               <!--  <div class="card">
+                    <h3 class="text-xl font-semibold mb-3 text-blue-700">Effective Communication Skills</h3>
+                    <div class="video-container">
+                        <video controls class="w-full h-full">
+                            <source src="images/VID-20250721-WA0002.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>-->
+                 <div class="card">
+                    <h3 class="text-xl font-semibold mb-3 text-blue-700">Effective Communication Skills</h3>
+                    <div class="video-container">
+                        <video controls class="w-full h-full">
+                            <source src="images/VID-20250721-WA0001.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+            </div>
+            <p id="no-videos-message" class="text-center text-gray-500 mt-8 hidden">No videos available in the gallery yet.</p>
+        </section>
+
+        <section id="photos-gallery">
+            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-8 text-blue-700">Photos</h2>
+            <div id="photos-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                <!-- Photos will be populated by JavaScript -->
+                <div class="card p-0 overflow-hidden">
+                    <img src="images/md1 (1).jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                <div class="card p-0 overflow-hidden">
+                    <img src="images/md4.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                <div class="card p-0 overflow-hidden">
+                    <img src="images/md2.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                <div class="card p-0 overflow-hidden">
+                    <img src="images/md3.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                <div class="card p-0 overflow-hidden">
+                    <img src="images/md5.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                <div class="card p-0 overflow-hidden">
+                    <img src="images/md6.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                <div class="card p-0 overflow-hidden">
+                    <img src="images/md7.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                <div class="card p-0 overflow-hidden">
+                    <img src="images/md8.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                 <div class="card p-0 overflow-hidden">
+                    <img src="images/md9.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                 <div class="card p-0 overflow-hidden">
+                    <img src="images/md11.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                 <div class="card p-0 overflow-hidden">
+                    <img src="images/md12.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                 <div class="card p-0 overflow-hidden">
+                    <img src="images/md13.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                 <div class="card p-0 overflow-hidden">
+                    <img src="images/md14.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                 <div class="card p-0 overflow-hidden">
+                    <img src="images/md15.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                 <div class="card p-0 overflow-hidden">
+                    <img src="images/md16.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                 <div class="card p-0 overflow-hidden">
+                    <img src="images/md17.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                 <div class="card p-0 overflow-hidden">
+                    <img src="images/md18.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                 <div class="card p-0 overflow-hidden">
+                    <img src="images/md19.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                 <div class="card p-0 overflow-hidden">
+                    <img src="images/md20.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                 <div class="card p-0 overflow-hidden">
+                    <img src="images/md21.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                 <div class="card p-0 overflow-hidden">
+                    <img src="images/md22.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                 <div class="card p-0 overflow-hidden">
+                    <img src="images/md23.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                 <div class="card p-0 overflow-hidden">
+                    <img src="images/md24.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                 <div class="card p-0 overflow-hidden">
+                    <img src="images/md25.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                 <div class="card p-0 overflow-hidden">
+                    <img src="images/md26.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                 <div class="card p-0 overflow-hidden">
+                    <img src="images/md27.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                 <div class="card p-0 overflow-hidden">
+                    <img src="images/md28.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                 <div class="card p-0 overflow-hidden">
+                    <img src="images/md29.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                 <div class="card p-0 overflow-hidden">
+                    <img src="images/md30.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                 <div class="card p-0 overflow-hidden">
+                    <img src="images/md31.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                 <div class="card p-0 overflow-hidden">
+                    <img src="images/md32.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                <div class="card p-0 overflow-hidden">
+                <img src="images/mdave1.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                <div class="card p-0 overflow-hidden">
+                    <img src="images/mdave11.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                <div class="card p-0 overflow-hidden">
+                    <img src="images/mdave2.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+            <div class="card p-0 overflow-hidden">
+                    <img src="images/md9.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                <div class="card p-0 overflow-hidden">
+                    <img src="images/mdave3.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                <div class="card p-0 overflow-hidden">
+                    <img src="images/mdave4.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                <div class="card p-0 overflow-hidden">
+                    <img src="images/mdave5.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                <div class="card p-0 overflow-hidden">
+                    <img src="images/mdave6.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                <div class="card p-0 overflow-hidden">
+                    <img src="images/mdave7.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                <div class="card p-0 overflow-hidden">
+                    <img src="images/mdave8.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                <div class="card p-0 overflow-hidden">
+                    <img src="images/mdave9.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                <div class="card p-0 overflow-hidden">
+                    <img src="images/mdave13.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                 <div class="card p-0 overflow-hidden">
+                    <img src="images/IMG-20250721-WA0018.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                 <div class="card p-0 overflow-hidden">
+                    <img src="images/IMG-20250721-WA0019.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                 <div class="card p-0 overflow-hidden">
+                    <img src="images/IMG-20250721-WA0020.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                 <div class="card p-0 overflow-hidden">
+                    <img src="images/IMG-20250721-WA0021.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                 <div class="card p-0 overflow-hidden">
+                    <img src="images/IMG-20250721-WA0022.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                 <div class="card p-0 overflow-hidden">
+                    <img src="images/IMG-20250721-WA0023.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                 <div class="card p-0 overflow-hidden">
+                    <img src="images/IMG-20250721-WA0024.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                 <div class="card p-0 overflow-hidden">
+                    <img src="images/IMG-20250721-WA0025.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                 <div class="card p-0 overflow-hidden">
+                    <img src="images/IMG-20250721-WA0026.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                 <div class="card p-0 overflow-hidden">
+                    <img src="images/IMG-20250721-WA0027.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                 <div class="card p-0 overflow-hidden">
+                    <img src="images/IMG-20250721-WA0028.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                 <div class="card p-0 overflow-hidden">
+                    <img src="images/IMG-20250721-WA0030.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                 <div class="card p-0 overflow-hidden">
+                    <img src="images/IMG-20250721-WA0031.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                 <div class="card p-0 overflow-hidden">
+                    <img src="images/IMG-20250721-WA0031.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                 <div class="card p-0 overflow-hidden">
+                    <img src="images/IMG-20250721-WA0032.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+                 <div class="card p-0 overflow-hidden">
+                    <img src="images/IMG-20250721-WA0033.jpg" alt="Gallery Photo" class="photo-img" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                </div>
+            </div>
+            <p id="no-photos-message" class="text-center text-gray-500 mt-8 hidden">No photos available in the gallery yet.</p>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4 sm:px-6 text-center">
+            <p>&copy; 2024 Ruth Kamau. All rights reserved.</p>
+            <div class="mt-6 flex justify-center space-x-6 mb-4">
+                <!-- Social Media Links -->
+                <a href="https://x.com/Adtranscounsel" target="_blank" class="text-white hover:text-blue-400 transition duration-300" aria-label="Adtrans Counselling on X.com"><i class="fab fa-x-twitter fa-2x"></i></a>
+                <a href="https://www.tiktok.com/@adtranscounseling" target="_blank" class="text-white hover:text-black transition duration-300" aria-label="Adtrans Counselling on TikTok"><i class="fab fa-tiktok fa-2x"></i></a>
+                <a href="https://www.youtube.com/@ruthkamau8761" target="_blank" class="text-white hover:text-red-500 transition duration-300" aria-label="Ruth Kamau's YouTube Channel"><i class="fab fa-youtube fa-2x"></i></a>
+                <a href="https://web.facebook.com/adtranslifecounselling" target="_blank" class="text-white hover:text-blue-600 transition duration-300" aria-label="Ruth Kamau's Facebook Profile"><i class="fab fa-facebook-f fa-2x"></i></a>
+                <a href="https://wa.me/254716364806" target="_blank" class="text-white hover:text-green-500 transition duration-300" aria-label="Contact Ruth Kamau on WhatsApp"><i class="fab fa-whatsapp fa-2x"></i></a>
+                <a href="https://www.instagram.com/ruth_kamau_counselor/?__pwa=1" target="_blank" class="text-white hover:text-pink-500 transition duration-300" aria-label="Ruth Kamau's Instagram Profile"><i class="fab fa-instagram fa-2x"></i></a>
+            </div>
+            <div class="mt-6">
+                <a href="admin.html" class="text-gray-400 hover:text-white text-sm">Admin Login</a>
+            </div>
+            <p class="text-sm mt-2">Designed with ❤️ by BapsInc</p>
+        </div>
+    </footer>
+
+    <script>
+        // Function to set a cookie
+        function setCookie(name, value, days) {
+            let expires = "";
+            if (days) {
+                const date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/";
+        }
+
+        // Function to get a cookie
+        function getCookie(name) {
+            const nameEQ = name + "=";
+            const ca = document.cookie.split(';');
+            for(let i=0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        // Apply dark mode based on cookie on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const darkModePreference = getCookie('darkMode');
+            if (darkModePreference === 'enabled') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('dark-mode-toggle').innerHTML = '<i class="fas fa-sun text-xl"></i>'; // Change icon to sun
+            }
+
+            // Toggle dark mode on button click
+            document.getElementById('dark-mode-toggle').addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                if (document.body.classList.contains('dark-mode')) {
+                    setCookie('darkMode', 'enabled', 365); // Remember for 1 year
+                    document.getElementById('dark-mode-toggle').innerHTML = '<i class="fas fa-sun text-xl"></i>'; // Change icon to sun
+                } else {
+                    setCookie('darkMode', 'disabled', 365); // Remember for 1 year
+                    document.getElementById('dark-mode-toggle').innerHTML = '<i class="fas fa-moon text-xl"></i>'; // Change icon to moon
+                }
+            });
+        });
+    </script>
+</body>
+</html>

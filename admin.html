@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* A lighter gray */
+        }
+        .label {
+            @apply block text-sm font-semibold text-gray-700 mb-2;
+        }
+        .input {
+            @apply mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 transition duration-150 ease-in-out text-gray-900;
+        }
+        .btn {
+            @apply inline-flex items-center justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white transition duration-150 ease-in-out;
+        }
+        .btn-primary {
+            @apply bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500;
+        }
+        .btn-danger {
+             @apply bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500;
+        }
+        .btn-secondary {
+            @apply bg-gray-500 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400;
+        }
+        .card {
+            @apply bg-white p-6 rounded-xl shadow-md h-full;
+        }
+        .card-header {
+            @apply text-xl font-bold text-gray-800 mb-4 flex items-center;
+        }
+        .card-header .icon {
+            @apply mr-3 text-blue-500;
+        }
+        .upload-area {
+            @apply mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md;
+            transition: border-color 0.3s ease;
+        }
+        .upload-area.drag-over {
+            border-color: #3b82f6; /* Blue-500 */
+        }
+        .message-box {
+            @apply fixed top-5 right-5 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg shadow-lg hidden z-50;
+        }
+        .message-box.error {
+            @apply bg-red-100 border-red-400 text-red-700;
+        }
+        .message-box.info {
+            @apply bg-blue-100 border-blue-400 text-blue-700;
+        }
+        .preview-wrapper {
+            @apply relative group bg-gray-100 rounded-md shadow-md overflow-hidden;
+        }
+        .preview-wrapper img, .preview-wrapper video {
+            @apply w-full object-cover;
+        }
+        .preview-wrapper .remove-btn {
+            @apply absolute top-1 right-1 bg-red-500 text-white rounded-full h-6 w-6 flex items-center justify-center text-lg font-bold opacity-0 group-hover:opacity-100 transition-opacity;
+        }
+        .preview-wrapper .file-name-span {
+            @apply absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white text-xs p-1 truncate rounded-b-md;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div id="login-form" class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md w-full space-y-8">
+            <div>
+                <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                   Admin Panel Login
+                </h2>
+            </div>
+            <div class="bg-white p-8 rounded-2xl shadow-lg">
+                <div id="error-message" class="message-box error" role="alert">
+                    <strong class="font-bold">Error:</strong>
+                    <span class="block sm:inline"></span>
+                </div>
+                <form class="space-y-6" onsubmit="handleLogin(event)">
+                    <div>
+                        <label for="username" class="label">Username</label>
+                        <input type="text" id="username" name="username" required class="input">
+                    </div>
+                    <div>
+                        <label for="password" class="label text-purple-700">Password</label>
+                        <input type="password" id="password" name="password" required class="input">
+                    </div>
+                    <div>
+                        <button type="submit" class="w-full btn btn-primary py-3 font-semibold text-base">
+                            <i class="fas fa-sign-in-alt mr-2"></i> Sign in
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="admin-panel" class="hidden min-h-screen">
+        <header class="bg-white shadow-md sticky top-0 z-10">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center py-4">
+                    <h1 class="text-2xl font-bold text-gray-800">Admin Dashboard</h1>
+                    <button onclick="handleLogout()" class="btn btn-danger">
+                        <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="container mx-auto p-4 sm:p-6 lg:p-8">
+            <!-- New message box for dynamic features -->
+            <div id="dynamic-features-message" class="message-box info" role="alert">
+                <strong class="font-bold">Heads up!</strong>
+                <span class="block sm:inline">Dynamic website features will be soon available.</span>
+            </div>
+
+            <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-8 rounded-md" role="alert">
+                <p class="font-bold">Future Enhancement:</p>
+                <p>This admin panel is planned to be integrated with dbms for persistent data storage and secure user authentication. Currently, content changes are saved by downloading new HTML files, and uploaded images/videos need to be manually placed in your deployment's `images/` and `videos/` folders.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="space-y-8">
+                    <div class="card">
+                        <h2 class="card-header"><i class="fas fa-image icon"></i>Background & Logo Images</h2>
+                        <p class="text-sm text-gray-500 mb-4">Enter local image paths (e.g., `images/my-logo.png`) or upload new images. Uploaded images will be available for download.</p>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="logo-image-input" class="label text-purple-700">Logo Image Path</label>
+                                <div class="flex items-center space-x-2">
+                                    <input type="text" id="logo-image-input" class="input flex-grow" value="images/davee.png">
+                                    <input type="file" id="logo-image-upload" accept="image/*" class="hidden" onchange="handleSingleImageUpload(event, 'logo-image-input', 'images')">
+                                    <button type="button" onclick="document.getElementById('logo-image-upload').click()" class="btn btn-secondary px-3 py-2 text-sm">
+                                        <i class="fas fa-upload mr-2"></i>Upload New
+                                    </button>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="about-image-input" class="label text-purple-700">"About Me" Profile Image Path</label>
+                                <div class="flex items-center space-x-2">
+                                    <input type="text" id="about-image-input" class="input flex-grow" value="images/davee.jpg">
+                                    <input type="file" id="about-image-upload" accept="image/*" class="hidden" onchange="handleSingleImageUpload(event, 'about-image-input', 'images')">
+                                    <button type="button" onclick="document.getElementById('about-image-upload').click()" class="btn btn-secondary px-3 py-2 text-sm">
+                                        <i class="fas fa-upload mr-2"></i>Upload New
+                                    </button>
+                                </div>
+                            </div>
+                             <div>
+                                <label for="hero-bg-input" class="label text-purple-700">Hero Background Image Path</label>
+                                <div class="flex items-center space-x-2">
+                                    <input type="text" id="hero-bg-input" class="input flex-grow" value="images/Mdave1.jpg">
+                                    <input type="file" id="hero-bg-upload" accept="image/*" class="hidden" onchange="handleSingleImageUpload(event, 'hero-bg-input', 'images')">
+                                    <button type="button" onclick="document.getElementById('hero-bg-upload').click()" class="btn btn-secondary px-3 py-2 text-sm">
+                                        <i class="fas fa-upload mr-2"></i>Upload New
+                                    </button>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="parallax-1-bg-input" class="label text-purple-700">Parallax 1 Background Image Path</label>
+                                <div class="flex items-center space-x-2">
+                                    <input type="text" id="parallax-1-bg-input" class="input flex-grow" value="images/dave.png">
+                                    <input type="file" id="parallax-1-bg-upload" accept="image/*" class="hidden" onchange="handleSingleImageUpload(event, 'parallax-1-bg-input', 'images')">
+                                    <button type="button" onclick="document.getElementById('parallax-1-bg-upload').click()" class="btn btn-secondary px-3 py-2 text-sm">
+                                        <i class="fas fa-upload mr-2"></i>Upload New
+                                    </button>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="parallax-2-bg-input" class="label text-purple-700">Parallax 2 Background Image Path</label>
+                                <div class="flex items-center space-x-2">
+                                    <input type="text" id="parallax-2-bg-input" class="input flex-grow" value="images/mdave.jpg">
+                                    <input type="file" id="parallax-2-bg-upload" accept="image/*" class="hidden" onchange="handleSingleImageUpload(event, 'parallax-2-bg-input', 'images')">
+                                    <button type="button" onclick="document.getElementById('parallax-2-bg-upload').click()" class="btn btn-secondary px-3 py-2 text-sm">
+                                        <i class="fas fa-upload mr-2"></i>Upload New
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h2 class="card-header"><i class="fas fa-photo-video icon"></i>Gallery Management</h2>
+                        <div>
+                            <h3 class="text-lg font-semibold mb-2 text-gray-700">Photos (Max 50)</h3>
+                            <p class="text-sm text-gray-500 mb-4">Upload new photos to the gallery. These will be available for download.</p>
+                            <div id="photo-upload-area" class="upload-area">
+                                <div class="space-y-1 text-center">
+                                    <i class="fas fa-cloud-upload-alt text-4xl text-gray-400"></i>
+                                    <div class="flex text-sm text-gray-600">
+                                        <label for="gallery-photo-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
+                                            <span>Upload files</span>
+                                            <input id="gallery-photo-upload" name="gallery-photo-upload" type="file" multiple accept="image/*" class="sr-only">
+                                        </label>
+                                        <p class="pl-1">or drag and drop</p>
+                                    </div>
+                                    <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+                                </div>
+                            </div>
+                            <div id="photo-previews" class="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6"></div>
+                            <button onclick="generateAndDownloadFiles()" class="btn btn-secondary mt-4 w-full">
+                                <i class="fas fa-download mr-2"></i> Generate & Download All Files
+                            </button>
+                        </div>
+                        <div class="mt-8">
+                            <h3 class="text-lg font-semibold mb-2 text-gray-700">Videos (Max 10)</h3>
+                            <p class="text-sm text-gray-500 mb-4">
+                                Select videos to add to the gallery. These will be available for download.
+                            </p>
+                            <div id="video-upload-area" class="upload-area">
+                                <div class="space-y-1 text-center">
+                                    <i class="fas fa-video text-4xl text-gray-400"></i>
+                                    <div class="flex text-sm text-gray-600">
+                                        <label for="gallery-video-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
+                                            <span>Upload files</span>
+                                            <input id="gallery-video-upload" name="gallery-video-upload" type="file" multiple accept="video/mp4,video/webm" class="sr-only">
+                                        </label>
+                                        <p class="pl-1">or drag and drop</p>
+                                    </div>
+                                    <p class="text-xs text-gray-500">MP4, WebM up to 50MB</p>
+                                </div>
+                            </div>
+                            <div id="video-previews" class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+                            <button onclick="generateAndDownloadFiles()" class="btn btn-secondary mt-4 w-full">
+                                <i class="fas fa-download mr-2"></i> Generate & Download All Files
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-8">
+                    <div class="card">
+                        <h2 class="card-header"><i class="fas fa-pencil-alt icon"></i>About Section Content</h2>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="hero-title-input" class="label text-teal-700">Main Title (Hero)</label>
+                                <input type="text" id="hero-title-input" class="input" value="Ruth Kamau">
+                            </div>
+                            <div>
+                                <label for="hero-subtitle-input" class="label text-teal-700">Subtitle (Hero)</label>
+                                <input type="text" id="hero-subtitle-input" class="input" value="A compassionate Mediator & Mental Health Professional">
+                            </div>
+                             <div>
+                                <label for="about-title-input" class="label text-teal-700">"About Me" Section Title</label>
+                                <input type="text" id="about-title-input" class="input" value="About Ruth Kamau">
+                            </div>
+                            <div>
+                                <label for="about-image-caption-input" class="label text-teal-700">Profile Image Caption</label>
+                                <input type="text" id="about-image-caption-input" class="input" value="Self Drive.">
+                            </div>
+                            <div>
+                                <label for="about-p1-input" class="label text-teal-700">About Me - Paragraph 1</label>
+                                <textarea id="about-p1-input" rows="3" class="input w-full">Ruth Kamau is a highly experienced and empathetic mediator and mental health professional based in Thika, Kenya. With a deep commitment to fostering peace and well-being, Ruth specializes in guiding individuals and families through complex challenges, offering both conflict resolution and compassionate counseling services.</textarea>
+                            </div>
+                            <div>
+                                <label for="about-p2-input" class="label text-teal-700">About Me - Paragraph 2</label>
+                                <textarea id="about-p2-input" rows="3" class="input w-full">Her approach is rooted in creating a safe, confidential, and supportive environment where clients can explore their concerns, develop effective coping strategies, and achieve sustainable solutions. Ruth's diverse expertise allows her to address a wide spectrum of issues, from family disputes and trauma recovery to personal growth and life skills development.</textarea>
+                            </div>
+                            <div>
+                                <label for="about-p3-input" class="label text-teal-700">About Me - Paragraph 3 (Can include HTML for links)</label>
+                                <textarea id="about-p3-input" rows="3" class="input w-full">Dedicated to empowering her clients, Ruth combines professional insight with genuine care, helping them navigate life's complexities with resilience and clarity. Whether you're seeking resolution in a conflict or support for your mental well-being, Ruth is here to guide you on your journey to peace and wholeness. <a href="https://docs.google.com/forms/d/e/1FAIpQLSeHzwAyWTVa_Le7XO3nUezmIhicJw2NgLjvQCs2DJOVUv6Wtg/viewform" target="_blank" class="text-blue-600 hover:underline">Book a free consultation today.</a></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h2 class="card-header"><i class="fas fa-address-book icon"></i>Contact Information</h2>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="contact-email-input" class="label text-teal-700">Email Address</label>
+                                <input type="email" id="contact-email-input" class="input" value="ruth.kamau@example.com">
+                            </div>
+                            <div>
+                                <label for="contact-phone-input" class="label text-teal-700">Phone Number</label>
+                                <input type="tel" id="contact-phone-input" class="input" value="+254 7XX XXX XXX">
+                            </div>
+                            <div>
+                                <label for="contact-availability-input" class="label text-teal-700">Availability Text</label>
+                                <input type="text" id="contact-availability-input" class="input" value="Monday - Friday, 9:00 AM - 5:00 PM EAT">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-8 sticky bottom-0 py-4 bg-gray-100 bg-opacity-80 backdrop-blur-sm">
+                 <div id="save-success" class="message-box" role="alert">
+                    <strong class="font-bold">Success!</strong>
+                    <span class="block sm:inline">Files generated successfully. Please download and redeploy.</span>
+                </div>
+                <div id="save-error" class="message-box error" role="alert">
+                    <strong class="font-bold">Error!</strong>
+                    <span class="block sm:inline">Could not generate files. Please try again.</span>
+                </div>
+                <button onclick="generateAndDownloadFiles()" class="btn btn-primary text-lg px-10 py-3 font-bold transform hover:scale-105">
+                    <i class="fas fa-file-download mr-2"></i> Generate & Download Website Files
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // --- Global Variables ---
+        // Store File objects for later download
+        let galleryPhotos = []; 
+        let galleryVideos = [];
+        let uploadedSingleImages = {}; // Stores {inputId: FileObject} for single uploads
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Initializing with default paths for demonstration
+            // The actual files need to be present in your project's 'images' and 'videos' folders
+            // when you deploy to Netlify.
+            galleryVideos = [
+                { name: 'teach2.1.mp4', url: 'videos/teach2.1.mp4', poster: 'images/dave.png', title: 'The Importance of Mental Well-being', description: 'Ruth Kamau explains the crucial benefits and importance of prioritizing your mental well-being.' },
+                { name: 'teach.mp4', url: 'videos/teach.mp4', poster: 'images/mdave.jpg', title: 'Understanding Mediation', description: 'Learn about the mediation process and how it can help resolve disputes peacefully.' },
+                { name: 'teach1.mp4', url: 'videos/teach1.mp4', poster: 'images/mdave1.jpg', title: 'Mental Health Awareness', description: 'An insightful video on promoting mental well-being and seeking support.' }
+            ];
+            galleryPhotos = [
+                { path: 'images/image_3fc285.png' },
+                { path: 'images/image_3f58aa.png' },
+                { path: 'images/image_3f4d25.png' },
+                { path: 'images/image_356f7e.png' },
+                { path: 'images/image_356aeb.png' },
+                { path: 'images/image_356044.png' },
+                { path: 'images/image_356021.png' },
+                { path: 'images/image_151662.png' },
+                { path: 'images/image_0a3c7e.png' },
+                { path: 'images/image_0a2d9a.png' },
+                { path: 'images/image_0a29f8.png' },
+                { path: 'images/image_09b597.png' },
+                { path: 'images/image_094f46.png' },
+                { path: 'images/image_094c7e.png' },
+                { path: 'images/image_094800.png' },
+                { path: 'images/image_cea7a5.png' },
+                { path: 'images/image_ce9c48.png' },
+                { path: 'images/image_ce997d.png' },
+                { path: 'images/image_c4a496.png' },
+                { path: 'images/image_c4a472.png' },
+                { path: 'images/image_c4a439.png' }
+            ];
+
+            updatePhotoPreviews();
+            updateVideoPreviews();
+
+            // Ensure all message boxes are hidden on initial load
+            document.getElementById('save-success').classList.add('hidden');
+            document.getElementById('save-error').classList.add('hidden');
+            document.getElementById('error-message').classList.add('hidden');
+            document.getElementById('dynamic-features-message').classList.add('hidden'); // Hide new message
+
+            // Check if already "logged in" via session storage (for page reloads)
+            if (sessionStorage.getItem('isAdminLoggedIn') === 'true') {
+                showAdminPanel();
+                showMessage('Dynamic website features will be soon available.', 'info', 5000); // Display message on reload if logged in
+            } else {
+                showLoginForm();
+            }
+
+            setupDragAndDrop('photo-upload-area', 'gallery-photo-upload');
+            setupDragAndDrop('video-upload-area', 'gallery-video-upload');
+        });
+
+        // --- Authentication (Client-Side Filter) ---
+        async function handleLogin(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('error-message');
+
+            // --- IMPORTANT: This is a client-side check and is INSECURE for sensitive data ---
+            // Anyone can view the source code and find these credentials.
+            // For a real application, you'd need a backend authentication system.
+            if (username === "ruthkamau" && password === "mediator") {
+                sessionStorage.setItem('isAdminLoggedIn', 'true'); // Store a flag
+                errorMessage.classList.add('hidden'); // Hide any previous error
+                showAdminPanel();
+                showMessage('Dynamic website features will be soon available.', 'info', 5000); // Display message on successful login
+            } else {
+                errorMessage.querySelector('span').textContent = 'Invalid username or password.';
+                errorMessage.classList.remove('hidden');
+                setTimeout(() => errorMessage.classList.add('hidden'), 5000);
+            }
+        }
+
+        function handleLogout() {
+            sessionStorage.removeItem('isAdminLoggedIn'); // Clear local flag
+            document.getElementById('dynamic-features-message').classList.add('hidden'); // Hide message on logout
+            window.location.href = 'index.html'; // Redirect to index.html
+        }
+
+        function showAdminPanel() {
+            document.getElementById('login-form').classList.add('hidden');
+            document.getElementById('admin-panel').classList.remove('hidden');
+            // In this no-DB version, content is pre-filled or managed by user input directly
+            // No loadContentForEditing() needed as there's no DB to load from.
+        }
+
+        function showLoginForm() {
+            document.getElementById('login-form').classList.remove('hidden');
+            document.getElementById('admin-panel').classList.add('hidden');
+            // Ensure the error message is hidden when showing the login form
+            document.getElementById('error-message').classList.add('hidden');
+        }
+
+        // --- Message Box Helper ---
+        function showMessage(message, type, duration = 3000) {
+            const messageBox = document.createElement('div');
+            messageBox.className = `message-box ${type}`;
+            messageBox.innerHTML = `<strong class="font-bold">${type === 'success' ? 'Success!' : type === 'error' ? 'Error!' : 'Info!'}</strong> <span class="block sm:inline">${message}</span>`;
+            document.body.appendChild(messageBox);
+            messageBox.classList.remove('hidden');
+
+            setTimeout(() => {
+                messageBox.classList.add('hidden');
+                messageBox.remove(); // Remove from DOM after hiding
+            }, duration);
+        }
+
+        // --- Drag and Drop Helper ---
+        function setupDragAndDrop(areaId, inputId) {
+            const dropArea = document.getElementById(areaId);
+            const fileInput = document.getElementById(inputId);
+
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropArea.addEventListener(eventName, preventDefaults, false);
+            });
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropArea.addEventListener(eventName, () => dropArea.classList.add('drag-over'), false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropArea.addEventListener(eventName, () => dropArea.classList.remove('drag-over'), false);
+            });
+
+            dropArea.addEventListener('drop', e => {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                // Create a new FileList object to assign to the input
+                const dataTransfer = new DataTransfer();
+                for (let i = 0; i < files.length; i++) {
+                    dataTransfer.items.add(files[i]);
+                }
+                fileInput.files = dataTransfer.files;
+
+                if (inputId === 'gallery-photo-upload') {
+                    handlePhotoUpload({ target: { files: files } });
+                } else if (inputId === 'gallery-video-upload') {
+                    handleVideoUpload({ target: { files: files } });
+                }
+            }, false);
+
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+        }
+
+        // --- File Handling (No Database Upload) ---
+        const MAX_PHOTOS = 50;
+        const MAX_VIDEOS = 10;
+
+        // Function to handle single image uploads for background/logo fields
+        function handleSingleImageUpload(event, targetInputId, folder) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            // Store the File object in a global map for later download
+            uploadedSingleImages[targetInputId] = file;
+
+            // Update the input field with the expected local path
+            const localPath = `${folder}/${file.name}`;
+            document.getElementById(targetInputId).value = localPath; 
+            showMessage(`Image "${file.name}" uploaded to preview. Remember to download generated files and place it in your '${folder}/' folder.`, 'success');
+        }
+
+        // --- Gallery Photo Handling ---
+        document.getElementById('gallery-photo-upload').addEventListener('change', handlePhotoUpload);
+
+        function handlePhotoUpload(event) {
+            const files = Array.from(event.target.files);
+            
+            if (galleryPhotos.length + files.length > MAX_PHOTOS) {
+                showMessage('You can upload a maximum of ' + MAX_PHOTOS + ' photos.', 'error');
+                return;
+            }
+
+            for (const file of files) {
+                // Store the File object and its local path for later download and HTML generation
+                galleryPhotos.push({ file: file, path: `images/${file.name}` }); 
+            }
+            updatePhotoPreviews();
+            showMessage(`Photos added to preview. Remember to download generated files and place them in your 'images/' folder.`, 'success');
+        }
+        
+        function updatePhotoPreviews() {
+            const container = document.getElementById('photo-previews');
+            container.innerHTML = '';
+            galleryPhotos.forEach((photoData, index) => { 
+                const previewWrapper = document.createElement('div');
+                previewWrapper.className = 'preview-wrapper h-32';
+
+                const img = document.createElement('img');
+                // Use file if available (new upload), otherwise use path (for defaults)
+                img.src = photoData.file ? URL.createObjectURL(photoData.file) : photoData.path; 
+                img.className = 'w-full h-full object-cover';
+                img.onerror = function() {
+                    // Fallback for default images that might not be Blob URLs or if path is broken
+                    this.onerror = null;
+                    this.src = 'https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found'; // Generic fallback
+                };
+                
+                const removeBtn = document.createElement('button');
+                removeBtn.innerHTML = '&times;';
+                removeBtn.className = 'remove-btn';
+                removeBtn.onclick = () => {
+                    // Revoke Blob URL to free memory if it was a new upload
+                    if (photoData.file) URL.revokeObjectURL(img.src);
+                    galleryPhotos.splice(index, 1);
+                    updatePhotoPreviews();
+                    showMessage('Photo removed from preview. Remember to generate and redeploy files.', 'success');
+                };
+
+                const fileNameSpan = document.createElement('span');
+                fileNameSpan.textContent = photoData.file ? photoData.file.name : photoData.path.split('/').pop(); // Show filename or path
+                fileNameSpan.className = 'file-name-span';
+
+                previewWrapper.appendChild(img);
+                previewWrapper.appendChild(removeBtn);
+                previewWrapper.appendChild(fileNameSpan);
+                container.appendChild(previewWrapper);
+            });
+        }
+
+        // --- Gallery Video Handling ---
+        document.getElementById('gallery-video-upload').addEventListener('change', handleVideoUpload);
+
+        function handleVideoUpload(event) {
+            const files = Array.from(event.target.files);
+
+            if (galleryVideos.length + files.length > MAX_VIDEOS) {
+                showMessage('You can upload a maximum of ' + MAX_VIDEOS + ' videos.', 'error');
+                return;
+            }
+
+            for (const file of files) {
+                // Store the File object and its local path for later download and HTML generation
+                galleryVideos.push({ file: file, path: `videos/${file.name}`, name: file.name, title: file.name.split('.').slice(0, -1).join('.'), description: 'No description provided.' }); 
+            }
+            updateVideoPreviews();
+            showMessage('Videos added to preview. Remember to download generated files and place them in your \'videos/\' folder.', 'success');
+        }
+
+        function updateVideoPreviews() {
+            const container = document.getElementById('video-previews');
+            container.innerHTML = '';
+            galleryVideos.forEach((videoData, index) => { 
+                const previewWrapper = document.createElement('div');
+                previewWrapper.className = 'preview-wrapper h-40'; 
+
+                const video = document.createElement('video');
+                // Use file if available (new upload), otherwise use path (for defaults)
+                video.src = videoData.file ? URL.createObjectURL(videoData.file) : videoData.path; 
+                video.controls = true;
+                video.className = 'w-full h-full object-cover'; 
+                video.onerror = function() {
+                    // Fallback for default videos that might not be Blob URLs or if path is broken
+                    this.onerror = null;
+                    this.src = ''; // Clear src to prevent broken icon, or use a placeholder video
+                    console.error('Error loading video preview:', videoData.path);
+                };
+                
+                const removeBtn = document.createElement('button');
+                removeBtn.innerHTML = '&times;';
+                removeBtn.className = 'remove-btn';
+                removeBtn.onclick = () => {
+                    // Revoke Blob URL to free memory if it was a new upload
+                    if (videoData.file) URL.revokeObjectURL(video.src);
+                    galleryVideos.splice(index, 1);
+                    updateVideoPreviews();
+                    showMessage('Video removed from preview. Remember to generate and redeploy files.', 'success');
+                };
+
+                const fileNameSpan = document.createElement('span');
+                fileNameSpan.textContent = videoData.file ? videoData.file.name : videoData.name;
+                fileNameSpan.className = 'file-name-span';
+
+                previewWrapper.appendChild(video);
+                previewWrapper.appendChild(removeBtn);
+                previewWrapper.appendChild(fileNameSpan);
+                container.appendChild(previewWrapper);
+            });
+        }
+
+        // --- File Download Helpers ---
+        function downloadFile(content, fileName, contentType) {
+            const a = document.createElement("a");
+            const file = new Blob([content], { type: contentType });
+            a.href = URL.createObjectURL(file);
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(a.href); // Clean up the URL object
+        }
+
+        // --- Generate and Download All Files ---
+        async function generateAndDownloadFiles() {
+            try {
+                // 1. Get all content from the admin panel inputs
+                const content = {
+                    hero_title: document.getElementById('hero-title-input').value,
+                    hero_subtitle: document.getElementById('hero-subtitle-input').value,
+                    about_title: document.getElementById('about-title-input').value,
+                    about_image_caption: document.getElementById('about-image-caption-input').value,
+                    about_p1: document.getElementById('about-p1-input').value,
+                    about_p2: document.getElementById('about-p2-input').value,
+                    about_p3: document.getElementById('about-p3-input').value,
+                    contact_email: document.getElementById('contact-email-input').value,
+                    contact_phone: document.getElementById('contact-phone-input').value,
+                    contact_availability: document.getElementById('contact-availability-input').value,
+                    logo_image: document.getElementById('logo-image-input').value,
+                    about_image: document.getElementById('about-image-input').value,
+                    hero_bg: document.getElementById('hero-bg-input').value,
+                    parallax1_bg: document.getElementById('parallax-1-bg-input').value,
+                    parallax2_bg: document.getElementById('parallax-2-bg-input').value,
+                    gallery_photos: galleryPhotos.map(p => p.path), // Store local paths
+                    gallery_videos: galleryVideos.map(v => ({ name: v.name, url: v.path, poster: v.poster || '', title: v.title, description: v.description })), // Store local paths
+                };
+
+                // 3. Download the files
+                downloadFile(websiteHtmlContent, 'index.html', 'text/html');
+
+                // Download uploaded single images
+                for (const inputId in uploadedSingleImages) {
+                    const file = uploadedSingleImages[inputId];
+                    const folder = inputId.includes('hero-bg') || inputId.includes('parallax') ? 'images' : 'images'; // Determine folder
+                    downloadFile(file, `${folder}/${file.name}`, file.type);
+                }
+
+                // Download gallery photos
+                for (const photoData of galleryPhotos) {
+                    if (photoData.file) { // Only download if it was an uploaded file
+                        downloadFile(photoData.file, `images/${photoData.file.name}`, photoData.file.type);
+                    }
+                }
+
+                // Download gallery videos
+                for (const videoData of galleryVideos) {
+                    if (videoData.file) { // Only download if it was an uploaded file
+                        downloadFile(videoData.file, `videos/${videoData.file.name}`, videoData.file.type);
+                    }
+                }
+
+                showMessage('Files generated successfully. Please download and redeploy.', 'success');
+            } catch (error) {
+                console.error('Error generating or downloading files:', error);
+                showMessage('Could not generate files. Please try again.', 'error');
+            }
+        }
+</script>
+</html>
